@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { login, createUser } from '../services/auth.service';
 
 export function Auth(props) {
-    const formData = {email: "", password: ""};
+    const [isLoading, setIsLoading] = useState(false);
+    const formData = { email: "", password: "" };
     const [authMode, setAuthMode] = useState("signin");
     const [responseBody, setResponseBody] = useState(formData);
 
     const inputChangeHandler = (event) => {
-        const {name, value} = event.target
-        setResponseBody({...responseBody, [name]: value})
+        const { name, value } = event.target
+        setResponseBody({ ...responseBody, [name]: value })
     }
 
     const changeAuthMode = () => {
@@ -20,24 +21,26 @@ export function Auth(props) {
         e.preventDefault();
         console.log(responseBody);
         login(responseBody).then((res) => {
-            if(res.statusCode === 200) {
-               // TODO: llamada a login
-            }       
+            if (res.statusCode === 200) {
+                // TODO: llamada a login
+            }
         }).catch((error) => {
             throw new Error('Ops we have a problem here.');
         });
-     };
+    };
 
-     const handleSubmitRegister = (e) => {
+    const handleSubmitRegister = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         createUser(responseBody).then((res) => {
-            if(res.data.statusCode === 201) {
+            if (res.data.statusCode === 201) {
+                setIsLoading(false);
                 changeAuthMode();
             }
         }).catch((error) => {
             throw new Error('Ops something go wrong!', error);
         })
-     };
+    };
 
     if (authMode === "signin") {
         return (
@@ -59,7 +62,7 @@ export function Auth(props) {
                                 autoComplete="off"
                                 className="form-control mt-1"
                                 placeholder="Enter email"
-                                onChange={(e)=>inputChangeHandler(e)}
+                                onChange={(e) => inputChangeHandler(e)}
                             />
                         </div>
                         <div className="form-group mt-3">
@@ -70,7 +73,7 @@ export function Auth(props) {
                                 autoComplete="off"
                                 className="form-control mt-1"
                                 placeholder="Enter password"
-                                onChange={(e)=>inputChangeHandler(e)}
+                                onChange={(e) => inputChangeHandler(e)}
                             />
                         </div>
                         <div className="d-grid gap-2 mt-3">
@@ -105,7 +108,7 @@ export function Auth(props) {
                             type="text"
                             className="form-control mt-1"
                             placeholder="e.g Jane Doe"
-                            onChange={(e)=>inputChangeHandler(e)}
+                            onChange={(e) => inputChangeHandler(e)}
                         />
                     </div>
                     <div className="form-group mt-3">
@@ -115,7 +118,7 @@ export function Auth(props) {
                             type="email"
                             className="form-control mt-1"
                             placeholder="Email Address"
-                            onChange={(e)=>inputChangeHandler(e)}
+                            onChange={(e) => inputChangeHandler(e)}
                         />
                     </div>
                     <div className="form-group mt-3">
@@ -125,12 +128,15 @@ export function Auth(props) {
                             type="password"
                             className="form-control mt-1"
                             placeholder="Password"
-                            onChange={(e)=>inputChangeHandler(e)}
+                            onChange={(e) => inputChangeHandler(e)}
                         />
                     </div>
                     <div className="d-grid gap-2 mt-3">
-                        <button type="submit" className="btn btn-primary">
-                            Submit
+                        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                            { isLoading ? 
+                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                : 'Submit'
+                            }
                         </button>
                     </div>
                 </div>

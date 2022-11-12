@@ -71,3 +71,7 @@
   #zero-links a:hover {
     color: #000000;
   }
+
+  .link-primary {
+    cursor: pointer;
+  }
