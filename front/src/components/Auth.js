@@ -38,6 +38,7 @@ export function Auth(props) {
                 changeAuthMode();
             }
         }).catch((error) => {
+            setIsLoading(false);
             throw new Error('Ops something go wrong!', error);
         })
     };
@@ -70,6 +71,7 @@ export function Auth(props) {
                             <input
                                 type="password"
                                 name="password"
+                                required
                                 autoComplete="off"
                                 className="form-control mt-1"
                                 placeholder="Enter password"
@@ -116,6 +118,7 @@ export function Auth(props) {
                         <input
                             name="email"
                             type="email"
+                            required
                             className="form-control mt-1"
                             placeholder="Email Address"
                             onChange={(e) => inputChangeHandler(e)}
@@ -126,6 +129,8 @@ export function Auth(props) {
                         <input
                             name="password"
                             type="password"
+                            required
+                            minLength={6}
                             className="form-control mt-1"
                             placeholder="Password"
                             onChange={(e) => inputChangeHandler(e)}

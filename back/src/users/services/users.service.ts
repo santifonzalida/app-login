@@ -1,11 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/user.dto';
-import { Response } from '../../common/models/response.model';
 
 @Injectable()
 export class UsersService {
@@ -32,8 +35,16 @@ export class UsersService {
     const newUser = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
-    const user = await newUser.save();
-    const { password, ...res } = user.toJSON();
-    return res;
+    try {
+      const user = await newUser.save();
+      const { password, ...res } = user.toJSON();
+      return res;
+    } catch (error) {
+      const msg =
+        error.code === 11000
+          ? 'The email address already exists in the database'
+          : '';
+      throw new BadRequestException(msg);
+    }
   }
 }
