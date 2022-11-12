@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
-import { Auth } from './Auth';
-import { DefaultPage } from './defaultPage';
+import { Auth } from './components/Auth';
+import { DefaultPage } from './components/DefaultPage';
 
 function App() {
     return (

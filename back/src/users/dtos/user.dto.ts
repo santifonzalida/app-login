@@ -14,10 +14,13 @@ export class CreateUserDto {
   @ApiProperty()
   readonly password: string;
 
-  @IsNotEmpty()
   @IsString()
   @ApiProperty()
-  readonly role: string;
+  readonly role: string = 'customer';
+
+  @ApiProperty()
+  @IsString()
+  readonly fullName: string;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}

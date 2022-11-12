@@ -30,9 +30,10 @@ export function Auth(props) {
 
      const handleSubmitRegister = (e) => {
         e.preventDefault();
-        console.log(responseBody);
         createUser(responseBody).then((res) => {
-            console.log(res);
+            if(res.data.statusCode === 201) {
+                changeAuthMode();
+            }
         }).catch((error) => {
             throw new Error('Ops something go wrong!', error);
         })

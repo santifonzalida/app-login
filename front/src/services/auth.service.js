@@ -9,7 +9,7 @@ export const login = (responseBody) => {
 }
 
 export const createUser = (responseBody) => {
-    return axios.post('localhost:3001/users', responseBody).then(data => {
+    return axios.post('http://localhost:3001/users', responseBody).then(data => {
         return data;
     });   
 }
