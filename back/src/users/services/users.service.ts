@@ -41,9 +41,7 @@ export class UsersService {
       return res;
     } catch (error) {
       const msg =
-        error.code === 11000
-          ? 'The email address already exists in the database'
-          : '';
+        error.code === 11000 ? 'The email address is already registered' : '';
       throw new BadRequestException(msg);
     }
   }

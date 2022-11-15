@@ -5,7 +5,7 @@ export const login = (responseBody) => {
         email: responseBody.email,
         password: responseBody.password,
     };
-    return axios.post('https://reqres.in/api/articles', body);
+    return axios.post('http://localhost:3001/auth/login', body);
 }
 
 export const createUser = (responseBody) => {
