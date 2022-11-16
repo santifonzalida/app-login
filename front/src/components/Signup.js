@@ -10,7 +10,6 @@ export function Singup(props) {
     const [responseBody, setResponseBody] = useState(formData);
     const [isLoading, setIsLoading] = useState(false);
 
-
     const inputChangeHandler = (event) => {
         const { name, value } = event.target;
         setResponseBody({ ...responseBody, [name]: value });
