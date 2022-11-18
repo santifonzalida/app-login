@@ -22,9 +22,13 @@ export function Signin(props) {
             if (res.statusCode === 200) {
                 // TODO: ingreso al sistema
             }
-        }).catch(() => {
-            setHasError({ error: true, message: 'Incorrect username or password.'});
+        }).catch((error) => {
             setIsLoading(false);
+            if(error.response.status === 401) {
+                setHasError({ error: true, message: 'Incorrect username or password.'});
+            }else {
+                setHasError({ error: true, message: error.message });
+            }
         });
     };
 
