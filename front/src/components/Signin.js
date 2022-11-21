@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import  Alert from "react-bootstrap/Alert";
+import Alert from "react-bootstrap/Alert";
+import { Link } from 'react-router-dom';
 
 import { login } from '../services/auth.service';
 
 export function Signin(props) {
     const formData = { email: "", password: "" };
-    const [hasError, setHasError] = useState({ error:false, message:'' });
+    const [hasError, setHasError] = useState({ error: false, message: '' });
     const [responseBody, setResponseBody] = useState(formData);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -17,32 +18,29 @@ export function Signin(props) {
     const handleSubmitLogin = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        login(responseBody).then((res) => {
+        login(responseBody).then(() => {
             setIsLoading(false);
-            if (res.statusCode === 200) {
-                // TODO: ingreso al sistema
-            }
-        }).catch((error) => {
+            
+        }).catch((err) => {
             setIsLoading(false);
-            if(error.response.status === 401) {
-                setHasError({ error: true, message: 'Incorrect username or password.'});
-            }else {
-                setHasError({ error: true, message: error.message });
+            setHasError({ error: true, message: err.message });
+            if (err.response.status === 401) {
+                setHasError({ error: true, message: 'Incorrect username or password.' });
             }
         });
     };
 
-    const onCloseAlert = ()=> {
-        setHasError({error:false, message: ''});
+    const onCloseAlert = () => {
+        setHasError({ error: false, message: '' });
     }
 
     return (
         <>
             <div className="Auth-form-container">
                 <form className="Auth-form" onSubmit={handleSubmitLogin}>
-                    { hasError.error 
-                        ? <Alert variant="danger" dismissible onClose={onCloseAlert} style={{ textAlign:'center' }}>{hasError.message}</Alert> 
-                        : '' 
+                    {hasError.error
+                        ? <Alert variant="danger" dismissible onClose={onCloseAlert} style={{ textAlign: 'center' }}>{hasError.message}</Alert>
+                        : ''
                     }
                     <div className="Auth-form-content">
                         <h3 className="Auth-form-title">Sign In</h3>
@@ -77,14 +75,15 @@ export function Signin(props) {
                         </div>
                         <div className="d-grid gap-2 mt-3">
                             <button type="submit" className="btn btn-primary">
-                                {isLoading 
+                                {isLoading
                                     ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     : 'Submit'
                                 }
                             </button>
                         </div>
                         <p className="text-center mt-2">
-                            Forgot <a href="#">password?</a>
+                        
+                            Forgot <Link to="/forgotpassword">password?</Link>
                         </p>
                     </div>
                 </form>

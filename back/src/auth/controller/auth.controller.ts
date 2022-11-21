@@ -14,4 +14,9 @@ export class AuthController {
   login(@Request() req) {
     return this.authService.login(req.user);
   }
+
+  @Post('auth/forgotpassword')
+  forgotpassword() {
+    console.log('forgot password0');
+  }
 }

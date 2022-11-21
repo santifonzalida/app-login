@@ -1,27 +1,25 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import  Alert from "react-bootstrap/Alert";
 
-import { createUser } from "../services/auth.service";
+import { forgotPassword } from "../services/auth.service";
 
-export function Singup(props) {
+export function ForgotPassword() {
 
-    const formData = { email: "", password: "" };
     const [hasError, setHasError] = useState({error: false, message: ''});
-    const [responseBody, setResponseBody] = useState(formData);
+    const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const inputChangeHandler = (event) => {
-        const { name, value } = event.target;
-        setResponseBody({ ...responseBody, [name]: value });
+        const { value } = event.target;
+        setEmail(value);
     }
 
-    const handleSubmitRegister = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        createUser(responseBody).then((res) => {
-            if (res.data.statusCode === 201) {
-                props.changeAuthMode();
-            }
+        forgotPassword(email).then((res) => {
+            console.log(res);
         }).catch((error) => {
             setHasError({error:true, message: error.response.data.message});
         }).finally(() => {
@@ -36,29 +34,18 @@ export function Singup(props) {
     return (
         <>
             <div className="Auth-form-container">
-                <form className="Auth-form" onSubmit={handleSubmitRegister}>
+                <form className="Auth-form" onSubmit={handleSubmit}>
                     { hasError.error 
                         ? <Alert variant="danger" dismissible onClose={onCloseAlert} style={{ textAlign: 'center' }}>{hasError.message}</Alert> 
                         : '' 
                     }
                     <div className="Auth-form-content">
-                        <h3 className="Auth-form-title">Sign up</h3>
+                        <h3 className="Auth-form-title">Forgot your password?</h3>
                         <div className="text-center">
-                            Already registered?{" "}
-                            <span className="link-primary" onClick={props.changeAuthMode}>
-                                Sign In
-                            </span>
+                            Hey, we received a request to reset your password. <br/>
+                            Let’s get you a new one!
                         </div>
-                        <div className="form-group mt-3">
-                            <label>Full Name</label>
-                            <input
-                                name="fullName"
-                                type="text"
-                                className="form-control mt-1"
-                                placeholder="e.g Jane Doe"
-                                onChange={(e) => inputChangeHandler(e)}
-                            />
-                        </div>
+                        
                         <div className="form-group mt-3">
                             <label>Email address</label>
                             <input
@@ -70,25 +57,16 @@ export function Singup(props) {
                                 onChange={(e) => inputChangeHandler(e)}
                             />
                         </div>
-                        <div className="form-group mt-3">
-                            <label>Password</label>
-                            <input
-                                name="password"
-                                type="password"
-                                required
-                                minLength={6}
-                                className="form-control mt-1"
-                                placeholder="Password"
-                                onChange={(e) => inputChangeHandler(e)}
-                            />
-                        </div>
                         <div className="d-grid gap-2 mt-3">
                             <button type="submit" className="btn btn-primary" disabled={isLoading}>
                                 {isLoading ?
                                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    : 'Submit'
+                                    : 'Reset my password'
                                 }
                             </button>
+                        </div>
+                        <div className="text-center">
+                            Didn’t request a password reset? <Link to="/auth" >Go back!</Link>
                         </div>
                     </div>
                 </form>

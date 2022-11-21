@@ -19,7 +19,7 @@ export function DefaultPage() {
 
                 <br />
                 Check out the repository at{" "}
-                <a href="https://reactrouter.com/">
+                <a href="https://github.com/santifonzalida/app-login">
                     github.com
                 </a>
                 .
