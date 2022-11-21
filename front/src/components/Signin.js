@@ -25,7 +25,7 @@ export function Signin(props) {
             setIsLoading(false);
             setHasError({ error: true, message: err.message });
             if (err.response.status === 401) {
-                setHasError({ error: true, message: 'Incorrect username or password.' });
+                setHasError({ error: true, message: 'Incorrect email address  or password.' });
             }
         });
     };

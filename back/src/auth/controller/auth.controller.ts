@@ -1,8 +1,9 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Body, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthService } from '../services/auth.service';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
 
 @ApiTags('Auth')
 @Controller()
@@ -16,7 +17,7 @@ export class AuthController {
   }
 
   @Post('auth/forgotpassword')
-  forgotpassword() {
-    console.log('forgot password0');
+  forgotpassword(@Body() payload: ResetPasswordDto) {
+    return this.authService.validateEmailAddress(payload);
   }
 }

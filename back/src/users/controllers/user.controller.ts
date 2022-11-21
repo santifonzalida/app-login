@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Post,
-  Get,
-  Body,
-  Param,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dtos/user.dto';
 import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { TransformInterceptor } from 'src/common/interceptors/transform.interceptor';
 
 @ApiTags('Users')
 @Controller('users')
@@ -33,7 +24,6 @@ export class UserController {
   }
 
   @Post()
-  @UseInterceptors(TransformInterceptor)
   create(@Body() payload: CreateUserDto) {
     return this.usersService.createUser(payload);
   }

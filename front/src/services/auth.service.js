@@ -16,5 +16,5 @@ export const forgotPassword = (email) => {
     const body = {
         email,
     };
-    return axios.post('http://192.168.100.23:3000/auth/forgotpassword', body);
+    return axios.post('http://192.168.100.23:3001/auth/forgotpassword', body);
 }
