@@ -1,19 +1,17 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
 import { UsersService } from 'src/users/services/users.service';
 import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { MailService } from 'src/mail/services/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -44,7 +42,7 @@ export class AuthService {
         const secret = user.password + user.created;
         const token = this.jwtService.sign(payload, { secret: secret });
         //enviar correo electronico
-
+        this.mailService.sendUserResetPasswordConfirmation(user, token);
         return {
           message: `We sent an email with instructions to ${payload.email} `,
           success: true,

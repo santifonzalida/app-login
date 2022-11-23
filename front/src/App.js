@@ -5,6 +5,7 @@ import { Auth } from './components/Auth';
 import { DefaultPage } from './components/DefaultPage';
 import { Dashboard } from "./components/Dashboard";
 import { ForgotPassword } from './components/forgotPassword';
+import { ResetPasswordForm } from "./components/ResetPassword";
 
 function App() {
     return (
@@ -12,7 +13,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<DefaultPage />} />
                 <Route path="/auth" element={<Auth />} />
-                <Route path='/forgotpassword' element={<ForgotPassword />} />
+                <Route path='/forgotpassword' element={<ForgotPassword />} /> 
+                <Route path="/reset/:userId/:token" element={<ResetPasswordForm/>} />
                 <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
         </BrowserRouter>

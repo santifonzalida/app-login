@@ -9,6 +9,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { UsersModule } from 'src/users/users.module';
 import config from 'src/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   providers: [AuthService, LocalStrategy, JwtStrategy],
@@ -27,6 +28,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         };
       },
     }),
+    MailModule,
   ],
   exports: [AuthService],
 })

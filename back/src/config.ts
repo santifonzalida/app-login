@@ -10,5 +10,13 @@ export default registerAs('config', () => {
       connection: process.env.MONGO_CONNECTION,
     },
     jwtSecret: process.env.JWT_SECRET,
+    mailer: {
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
+      user: process.env.MAIL_USER,
+      password: process.env.MAIL_PASSWORD,
+      from: process.env.MAIL_FROM,
+      api_key: process.env.MAIL_API_KEY,
+    },
   };
 });
