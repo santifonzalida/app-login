@@ -18,3 +18,7 @@ export const forgotPassword = (email) => {
     };
     return axios.post('http://192.168.100.23:3001/auth/forgotpassword', body);
 }
+
+export const validateUrl = (payload) => {
+    return axios.post('http://192.168.100.23:3001/users', payload);
+}

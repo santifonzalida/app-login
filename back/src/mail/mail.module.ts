@@ -10,11 +10,8 @@ import config from '../config';
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      // transport: 'smtps://user@example.com:topsecret@smtp.example.com',
-      // or
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { host, user, password, port, from, api_key } =
-          configService.mailer;
+        const { host, user, password, from } = configService.mailer;
         return {
           transport: {
             host,
@@ -29,7 +26,7 @@ import config from '../config';
           },
           template: {
             dir: join(__dirname, 'templates'),
-            adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+            adapter: new HandlebarsAdapter(),
             options: {
               strict: true,
             },

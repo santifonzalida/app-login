@@ -41,7 +41,6 @@ export class AuthService {
       if (user) {
         const secret = user.password + user.created;
         const token = this.jwtService.sign(payload, { secret: secret });
-        //enviar correo electronico
         this.mailService.sendUserResetPasswordConfirmation(user, token);
         return {
           message: `We sent an email with instructions to ${payload.email} `,
