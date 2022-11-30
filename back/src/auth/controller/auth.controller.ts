@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthService } from '../services/auth.service';
-import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { ResetPasswordDto, ValidateUrlDto } from '../dtos/reset-password.dto';
 
 @ApiTags('Auth')
 @Controller()
@@ -19,5 +19,10 @@ export class AuthController {
   @Post('auth/forgotpassword')
   forgotpassword(@Body() payload: ResetPasswordDto) {
     return this.authService.validateEmailAddress(payload);
+  }
+
+  @Post('auth/validateUrl')
+  validateUrl(@Body() payload: ValidateUrlDto) {
+    return this.authService.validateUrl(payload);
   }
 }

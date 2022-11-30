@@ -8,7 +8,7 @@ export class MailService {
   constructor(private mailerService: MailerService) {}
 
   async sendUserResetPasswordConfirmation(user: User, token: string) {
-    const url = `http://192.169.100.23:3001/reset/${user.password}/${token}`;
+    const url = `http://192.169.100.23:3001/reset/${user._id}/${token}`;
     try {
       await this.mailerService.sendMail({
         to: user.email,
