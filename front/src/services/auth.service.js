@@ -20,9 +20,16 @@ export const forgotPassword = (email) => {
 }
 
 export const validateUrl = (userId, token) => {
-    const body = { 
+    const body = {
         userId: userId.toString(),
         token: token.toString(),
     }
     return axios.post('http://192.168.100.23:3001/auth/validateUrl', body);
 }
+
+export const saveNewPassword = (id, password) => {
+    const body = {
+        password,
+    }
+    return axios.post(`http://192.168.100.23:3001/user/${id}`, body);
+} 

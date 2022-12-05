@@ -12,6 +12,6 @@ export class MongoIdPipe implements PipeTransform {
     if (!isMongoId(value)) {
       throw new BadRequestException(`${value} is not a mongoId.`);
     }
+    return value;
   }
 }
-3;

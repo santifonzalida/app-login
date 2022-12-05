@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -59,19 +63,15 @@ export class AuthService {
     let isValid = false;
     try {
       const user = await this.usersService.getUserById(payload.userId);
-      if (user) {
-        const secret = user.password + user.created;
-        const decodedPayload = jwt.decode(payload.token, secret);
-        if (decodedPayload.email === user.email) {
-          isValid = true;
-        }
-      } else {
-        throw new NotFoundException(
-          `It's not possible to reset your password.`,
-        );
+      const secret = user.password + user.created;
+      const decodedPayload = jwt.decode(payload.token, secret);
+      if (decodedPayload.email === user.email) {
+        isValid = true;
       }
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(
+        `It's not possible to reset your password. Please contact the admin site.`,
+      );
     }
     return { isValidUrl: isValid };
   }

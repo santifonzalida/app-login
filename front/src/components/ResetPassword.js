@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
-import { validateUrl } from '../services/auth.service';
+import { validateUrl, saveNewPassword } from '../services/auth.service';
 
 
 export function ResetPasswordForm() {
@@ -11,25 +11,27 @@ export function ResetPasswordForm() {
     const [hasError, setHasError] = useState({ error: false, message: '', variant: 'danger' });
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [enableForm, setEnableForm] = useState(false);
 
-    useEffect(
+    useEffect(() => {
         validateUrl(userId, token)
-            .then((res) => {
+        .then((res) => {
             if (res.isValid) {
                 console.log(res);
             }
         })
-    .catch((error) => {
-        setHasError({
-            error: true,
-            message: error.response.data.message,
-            variant: 'danger',
-        });
-    })
-    .finally(() => {
-        setIsLoading({ isLoading: false });
-    })
-    );
+        .catch((error) => {
+            setHasError({
+                error: true,
+                message: error.response.data.message,
+                variant: 'danger',
+            });
+            setEnableForm(true);
+        })
+        .finally(() => {
+            setIsLoading(false);
+        })
+    }, []);
 
 
 const inputChangeHandler = (event) => {
@@ -40,18 +42,26 @@ const inputChangeHandler = (event) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userId, token)
-    setIsLoading({ isLoading: true });
-
+    setIsLoading(true);
+    saveNewPassword(userId, password)
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        setHasError({
+            error: true,
+            message: err.response.data.message,
+            variant: 'danger',
+        });
+    })
+    .finally(() => setIsLoading({ isLoading: false }))
 
 };
 
 const onCloseAlert = () => {
-    this.setState({
-        hasError: {
-            error: false,
-            message: ''
-        }
+    setHasError({
+        error:false,
+        message: '',        
     });
 }
 
@@ -78,21 +88,20 @@ return (
                             className="form-control mt-1"
                             placeholder="Password"
                             onChange={(e) => inputChangeHandler(e)}
+                            disabled={enableForm}
                         />
                     </div>
                     <div className="d-grid gap-2 mt-3">
-                        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                        <button type="submit" className="btn btn-primary" disabled={enableForm || isLoading}>
                             {isLoading
                                 ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                : 'Reset my password'
+                                : 'Save new password'
                             }
                         </button>
                     </div>
-
                 </div>
             </form>
         </div>
     </>
-)
-}
+)}
 
