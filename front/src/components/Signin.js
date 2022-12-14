@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import Alert from "react-bootstrap/Alert";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { login } from '../services/auth.service';
 
 export function Signin(props) {
+    const navigate = useNavigate();
     const formData = { email: "", password: "" };
     const [hasError, setHasError] = useState({ error: false, message: '' });
     const [responseBody, setResponseBody] = useState(formData);
@@ -18,9 +19,11 @@ export function Signin(props) {
     const handleSubmitLogin = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        login(responseBody).then(() => {
+        login(responseBody).then((data) => {
             setIsLoading(false);
-            
+            saveToken(data.data.data.access_token);
+            setUserInfo(data.data.data);
+            navigate("/dashboard");
         }).catch((err) => {
             setIsLoading(false);
             setHasError({ error: true, message: err.message });
@@ -29,6 +32,15 @@ export function Signin(props) {
             }
         });
     };
+
+    const saveToken = (userToken) => {
+        localStorage.setItem('accessToken', JSON.stringify(userToken));
+    }
+
+    const setUserInfo = (userInfo) => {
+        const user = { userId: userInfo.userId, userName: userInfo.username };
+        localStorage.setItem('userInfo', JSON.stringify(user));
+    }
 
     const onCloseAlert = () => {
         setHasError({ error: false, message: '' });
@@ -82,7 +94,6 @@ export function Signin(props) {
                             </button>
                         </div>
                         <p className="text-center mt-2">
-                        
                             Forgot <Link to="/forgotpassword">password?</Link>
                         </p>
                     </div>

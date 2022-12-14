@@ -54,7 +54,11 @@ export class UsersService {
   async update(id, changes: UpdateUserDto) {
     try {
       const user = await this.userModel
-        .findByIdAndUpdate(id, { $set: changes }, { new: true })
+        .findByIdAndUpdate(
+          id,
+          { $set: { password: await bcrypt.hash(changes.password, 10) } },
+          { new: true },
+        )
         .exec();
       if (user) {
         return user;

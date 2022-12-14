@@ -45,7 +45,7 @@ const handleSubmit = (e) => {
     setIsLoading(true);
     saveNewPassword(userId, password)
     .then((res) => {
-        console.log(res);
+        console.log(res); 
     })
     .catch((err) => {
         setHasError({

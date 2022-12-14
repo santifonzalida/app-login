@@ -31,5 +31,5 @@ export const saveNewPassword = (id, password) => {
     const body = {
         password,
     }
-    return axios.post(`http://192.168.100.23:3001/user/${id}`, body);
-} 
+    return axios.put(`http://192.168.100.23:3001/users/${id}`, body);
+}  

@@ -37,7 +37,7 @@ export class UserController {
     return this.usersService.createUser(payload);
   }
 
-  @Put('password/:id')
+  @Put(':id')
   update(@Param('id', MongoIdPipe) id: string, @Body() payload: UpdateUserDto) {
     return this.usersService.update(id, payload);
   }

@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; 
 import { Auth } from './components/Auth';
 import { DefaultPage } from './components/DefaultPage';
 import { Dashboard } from "./components/Dashboard";
@@ -16,6 +16,7 @@ function App() {
                 <Route path='/forgotpassword' element={<ForgotPassword />} /> 
                 <Route path="/reset/:userId/:token" element={<ResetPasswordForm/>} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path='*' element={<Navigate to="/" repalce /> } />
             </Routes>
         </BrowserRouter>
     )
