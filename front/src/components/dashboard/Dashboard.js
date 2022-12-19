@@ -14,7 +14,7 @@ export function Dashboard() {
     useEffect(() => {
         setSearching(true);
         const token = JSON.parse(localStorage.getItem('accessToken'));
-        
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         if(!token) {
             navigate("/Auth");
         }
@@ -22,7 +22,12 @@ export function Dashboard() {
             .then((data) => {
                 setUsers(data);
                 setSearching(false);
-        });
+
+                let userIndex = data.findIndex(user => user._id == userInfo.userId);
+                if(userIndex > -1) {
+                    navigate(`/dashboard/profile/${userInfo.userId}`, {state:data[userIndex]})
+                }
+            })
     },[])
 
     const searchUser = (event) => {
@@ -61,7 +66,7 @@ export function Dashboard() {
                                 <li key={user._id}>
                                     <NavLink 
                                         to={{pathname: `profile/${user._id}`}}
-                                        state={{user}}
+                                        state={user}
                                         className={({ isActive }) =>
                                             isActive ? "active" : ""
                                         }

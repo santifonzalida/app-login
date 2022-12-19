@@ -13,5 +13,9 @@ export class User extends Document {
   fullName: string;
   @Prop()
   created: Date;
+  @Prop()
+  avatarUrl: string;
+  @Prop()
+  notes: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
