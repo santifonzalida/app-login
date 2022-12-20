@@ -10,7 +10,11 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { UsersService } from '../services/users.service';
-import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  UpdatePasswordUserDto,
+} from '../dtos/user.dto';
 import { RolesGuard } from 'src/auth/guards/roles.guards';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { MongoIdPipe } from 'src/common/pipes/mongo-id.pipe';
@@ -37,8 +41,17 @@ export class UserController {
     return this.usersService.createUser(payload);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   update(@Param('id', MongoIdPipe) id: string, @Body() payload: UpdateUserDto) {
+    return this.usersService.update(id, payload);
+  }
+
+  @Put('updatePassword/:id')
+  updatePassword(
+    @Param('id', MongoIdPipe) id: string,
+    @Body() payload: UpdatePasswordUserDto,
+  ) {
     return this.usersService.update(id, payload);
   }
 }

@@ -16,9 +16,14 @@ export const getUSerById = (userId, token) => {
     );
 }
 
-export const editProfile = (user, token) => {
-    const data = { user };
-    return axios.put(`http://192.168.100.23:3001/users/${user._id}`, data, {headers: {"Authorization": `Bearer ${token}`}})
+export const editProfile = (data, token) => {
+    const user = { 
+        avatarUrl: data.avatarUrl,
+        email:data.email,
+        fullName: data.fullName,
+        notes: data.notes
+    }
+    return axios.put(`http://192.168.100.23:3001/users/${data._id}`, user, {headers: {"Authorization": `Bearer ${token}`}})
         .then((data) => {
             return data.data.data;
         }

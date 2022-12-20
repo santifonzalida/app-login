@@ -8,7 +8,11 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
-import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
+import {
+  CreateUserDto,
+  UpdatePasswordUserDto,
+  UpdateUserDto,
+} from '../dtos/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -52,6 +56,23 @@ export class UsersService {
   }
 
   async update(id, changes: UpdateUserDto) {
+    try {
+      const user = await this.userModel
+        .findByIdAndUpdate(id, { $set: changes }, { new: true })
+        .exec();
+      if (user) {
+        return user;
+      } else {
+        throw new NotFoundException();
+      }
+    } catch (error) {
+      throw new BadRequestException(
+        'something go wrong!, contact the admin site.',
+      );
+    }
+  }
+
+  async updatePassword(id, changes: UpdatePasswordUserDto) {
     try {
       const user = await this.userModel
         .findByIdAndUpdate(

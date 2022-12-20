@@ -17,7 +17,7 @@ export function Profile(){
         <>
             <div id="contact">
                 <div>
-                <img key={user?.avatar} src={user?.avatar || null} />
+                <img key={user?.avatarUrl} src={user?.avatarUrl || null} />
                 </div>
                 <div>
                     <h1>

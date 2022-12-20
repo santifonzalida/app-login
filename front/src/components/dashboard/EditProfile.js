@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUSerById } from '../../services/users.service';
+import { getUSerById, editProfile as editProfileService } from '../../services/users.service';
 
 export function EditProfile(){
 
     const navigate = useNavigate();
     const [user, setUser] = useState();
+    const [token, setToken] = useState("");
 
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('accessToken'));
+        setToken(JSON.parse(localStorage.getItem('accessToken')));
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        
         getUSerById(userInfo.userId ,token)
             .then((data) => {
                 setUser(data);
@@ -21,7 +23,17 @@ export function EditProfile(){
 
     const onSubmitEdit = (e) => {
         e.preventDefault();
-        console.log(user)
+        editProfileService(user, token)
+            .then((data) => {
+                navigate(`/dashboard/profile/${data._id}`, {state:data});
+            }).catch((err) => { 
+                console.log(err);
+            });
+    }
+
+    const inputChangeHandler = (event) => {
+        const { name, value } = event.target
+        setUser({ ...user, [name]: value })
     }
 
     return (
@@ -34,33 +46,37 @@ export function EditProfile(){
                     type="text"
                     name="fullName"
                     defaultValue={user?.fullName}
+                    onChange={(e) => inputChangeHandler(e)}
                 />
             </label>
             <label>
                 <span>Email</span>
                 <input
-                type="email"
-                name="email"
-                placeholder="user@email.com"
-                defaultValue={user?.email}
+                    type="email"
+                    name="email"
+                    placeholder="user@email.com"
+                    defaultValue={user?.email}
+                    onChange={(e) => inputChangeHandler(e)}
                 />
             </label>
             <label>
                 <span>Avatar URL</span>
                 <input
-                placeholder="https://example.com/avatar.jpg"
-                aria-label="Avatar URL"
-                type="text"
-                name="avatar"
-                defaultValue={user?.avatar}
+                    placeholder="https://example.com/avatar.jpg"
+                    aria-label="Avatar URL"
+                    type="text"
+                    name="avatarUrl"
+                    defaultValue={user?.avatarUrl}
+                    onChange={(e) => inputChangeHandler(e)}
                 />
             </label>
             <label>
                 <span>Notes</span>
                 <textarea
-                name="notes"
-                defaultValue={user?.notes}
-                rows={6}
+                    name="notes"
+                    defaultValue={user?.notes}
+                    rows={6}
+                    onChange={(e) => inputChangeHandler(e)}
                 />
             </label>
             <p>
