@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { validateUrl, saveNewPassword } from '../services/auth.service';
 
@@ -8,6 +8,7 @@ import { validateUrl, saveNewPassword } from '../services/auth.service';
 export function ResetPasswordForm() {
 
     const { userId, token } = useParams();
+    const navigate = useNavigate();
     const [hasError, setHasError] = useState({ error: false, message: '', variant: 'danger' });
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +47,8 @@ const handleSubmit = (e) => {
     saveNewPassword(userId, password)
     .then((res) => {
         console.log(res); 
+        setIsLoading(false);
+        navigate("/auth");
     })
     .catch((err) => {
         setHasError({

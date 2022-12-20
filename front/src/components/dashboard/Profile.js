@@ -13,6 +13,15 @@ export function Profile(){
         setIsOwner(userInfo.userId === location.state._id);
     })
 
+    const logout = (event) => {
+        if (confirm("Please confirm you want to logout.")) {
+            event.preventDefault();
+            localStorage.removeItem('userInfo');
+            localStorage.removeItem('accessToken');
+            navigate("/");
+        }
+    }
+
     return (
         <>
             <div id="contact">
@@ -43,6 +52,7 @@ export function Profile(){
                     {user?.notes && <p>{user?.notes}</p>}
                     <div>
                         <button type="submit" hidden={!isOwner} onClick={() => navigate(`/dashboard/profile/${user?._id}/edit`)}>Edit</button>
+                        <button type="submit" hidden={!isOwner} onClick={logout}>Log out</button>
                     </div>
                 </div>
             </div>

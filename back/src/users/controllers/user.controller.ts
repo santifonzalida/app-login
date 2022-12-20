@@ -52,6 +52,6 @@ export class UserController {
     @Param('id', MongoIdPipe) id: string,
     @Body() payload: UpdatePasswordUserDto,
   ) {
-    return this.usersService.update(id, payload);
+    return this.usersService.updatePassword(id, payload);
   }
 }
