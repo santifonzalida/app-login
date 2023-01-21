@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export function DefaultPage() {
 
     return (
-        <div>
+        <>
             <p id="zero-state">
                 This is a login demo app created using {" "} 
                 <a href="https://reactjs.org/">
@@ -23,12 +23,11 @@ export function DefaultPage() {
                     github.com
                 </a>
                 .
-            </p>
-
-            <p id="zero-links">
-                Navigate to <Link to={'/auth'} >Auth</Link>
-            </p>
-        </div>
-
+                <p id="zero-links">
+                    Navigate to <Link to={'/auth'} >Auth</Link>
+                </p>
+                <img src='/login.png' alt='logo' />
+            </p>          
+        </>
     )
 }

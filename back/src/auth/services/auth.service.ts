@@ -8,9 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jwt = require('jwt-simple');
 
-import { UsersService } from 'src/users/services/users.service';
+import { UsersService } from '../../users/services/users.service';
 import { ResetPasswordDto, ValidateUrlDto } from '../dtos/reset-password.dto';
-import { MailService } from 'src/mail/services/mail.service';
+import { MailService } from '../../mail/services/mail.service';
 
 @Injectable()
 export class AuthService {

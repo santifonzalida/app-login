@@ -15,9 +15,9 @@ import {
   UpdateUserDto,
   UpdatePasswordUserDto,
 } from '../dtos/user.dto';
-import { RolesGuard } from 'src/auth/guards/roles.guards';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { MongoIdPipe } from 'src/common/pipes/mongo-id.pipe';
+import { RolesGuard } from '../../auth/guards/roles.guards';
+import { JwtAuthGuard } from '../../auth/guards/jwt.guard';
+import { MongoIdPipe } from '../../common/pipes/mongo-id.pipe';
 
 @ApiTags('Users')
 @Controller('users')

@@ -45,7 +45,7 @@ export function ForgotPassword() {
                     <div className="Auth-form-content">
                         <h3 className="Auth-form-title">Forgot your password?</h3>
                         <div className="text-center">
-                           Enter the email associated with your account and we will send an email with instructions to reset your password.
+                           Enter the email associated with your account and we will send you instructions to reset your password.
                         </div>
                         
                         <div className="form-group mt-3">
