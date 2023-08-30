@@ -7,12 +7,14 @@ import {
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 
+import { AuthService } from '../services/auth.service';
+
 import { Role } from '../models/roles.model';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector, private authService: AuthService) {}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -21,8 +23,11 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    const isAuth = roles.some((role) => role === user.role);
+    const user_token = request.headers.authorization.replace('Bearer ', '');
+    const user: any = this.authService.decodeUserToken(user_token);
+    const userRol = user ? user.role : '';
+    const isAuth = roles.some((role) => role === userRol);
+
     if (!isAuth) {
       throw new UnauthorizedException('Not allowed!');
     }

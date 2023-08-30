@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   login(user: any) {
-    const payload = { username: user.email, sub: user._id };
+    const payload = { username: user.email, sub: user._id, role: user.role };
     return {
       access_token: this.jwtService.sign(payload),
       username: payload.username,
@@ -74,5 +74,9 @@ export class AuthService {
       );
     }
     return { isValidUrl: isValid };
+  }
+
+  decodeUserToken(userToken: string) {
+    return this.jwtService.decode(userToken);
   }
 }

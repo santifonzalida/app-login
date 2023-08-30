@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import config from './config';
+import { AuthService } from './auth/services/auth.service';
 
 @Module({
   imports: [
