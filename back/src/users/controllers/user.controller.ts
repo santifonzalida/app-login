@@ -40,7 +40,6 @@ export class UserController {
     return this.usersService.getUserById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() payload: CreateUserDto) {
     return this.usersService.createUser(payload);
