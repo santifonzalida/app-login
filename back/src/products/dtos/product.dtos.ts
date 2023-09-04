@@ -7,11 +7,9 @@ import {
   IsString,
   IsUrl,
   ValidateIf,
-  ValidateNested,
   Min,
   IsMongoId,
 } from 'class-validator';
-import { CreateCategoryDto } from './category.dtos';
 
 export class CreateProductDto {
   @IsNotEmpty()
