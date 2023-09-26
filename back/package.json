@@ -33,6 +33,7 @@
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "firebase-admin": "^11.10.1",
     "joi": "^17.6.3",
     "jwt-simple": "^0.5.6",
     "mongodb": "^4.11.0",

@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  IsUrl,
   ValidateIf,
   Min,
   IsMongoId,
@@ -29,9 +28,13 @@ export class CreateProductDto {
   @ApiProperty()
   readonly stock: number;
 
-  @IsUrl()
+  @IsString()
   @ApiProperty()
-  readonly image: string;
+  readonly imagesUrl: string[];
+
+  @IsString()
+  @ApiProperty()
+  readonly images: string[];
 
   @IsNotEmpty()
   @IsMongoId()

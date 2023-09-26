@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Category } from './category.entity';
 
@@ -17,7 +17,7 @@ export class Product extends Document {
   stock: number;
 
   @Prop()
-  image: string;
+  imagesUrl: string[];
 
   @Prop({ type: Types.ObjectId, ref: Category.name })
   category: Category | Types.ObjectId;

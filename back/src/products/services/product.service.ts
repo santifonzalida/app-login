@@ -7,11 +7,13 @@ import {
   FilterProductDto,
   UpdateProductDto,
 } from '../dtos/product.dtos';
+import { FirebaseService } from '../../firebase/services/firebase.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<Product>,
+    private firebaseService: FirebaseService,
   ) {}
 
   async findAll(params: FilterProductDto) {
@@ -41,6 +43,9 @@ export class ProductService {
   }
 
   create(createProductDto: CreateProductDto) {
+
+
+
     const newProduct = new this.productModel(createProductDto);
     return newProduct.save();
   }

@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { FirebaseModule } from '../firebase/firebase.module';
 import { Product, ProductSchema } from './entities/product.entity';
 import { Category, CategorySchema } from './entities/category.entity';
 import { ProductController } from './controllers/product.controller';
@@ -20,6 +21,7 @@ import { CategoriesService } from './services/categories.service';
         schema: CategorySchema,
       },
     ]),
+    FirebaseModule,
   ],
   controllers: [ProductController, CategoryController],
   providers: [ProductService, CategoriesService],

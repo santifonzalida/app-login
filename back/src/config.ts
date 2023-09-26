@@ -18,5 +18,14 @@ export default registerAs('config', () => {
       from: process.env.MAIL_FROM,
       api_key: process.env.MAIL_API_KEY,
     },
+    firebase: {
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: process.env.AUTHDOMAIN,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STOREGEBUCKET,
+      messagingSenderId: process.env.MESSAGINGSENDER_ID,
+      appId: process.env.FIREBASE_APPID,
+      measurementId: process.env.MEASUREMENT_ID,
+    },
   };
 });
