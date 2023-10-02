@@ -24,8 +24,10 @@ export default registerAs('config', () => {
       projectId: process.env.PROJECT_ID,
       storageBucket: process.env.STOREGEBUCKET,
       messagingSenderId: process.env.MESSAGINGSENDER_ID,
-      appId: process.env.FIREBASE_APPID,
+      appId: process.env.FIREBASE_APP_ID,
       measurementId: process.env.MEASUREMENT_ID,
+      private_key: process.env.FIREBASE_PRIVATE_KEY,
+      client_email: process.env.CLIENT_EMAIL,
     },
   };
 });

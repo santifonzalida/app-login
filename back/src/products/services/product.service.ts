@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, FilterQuery } from 'mongoose';
 import { Product } from '../entities/product.entity';
@@ -7,7 +7,7 @@ import {
   FilterProductDto,
   UpdateProductDto,
 } from '../dtos/product.dtos';
-import { FirebaseService } from '../../firebase/services/firebase.service';
+import { FirebaseService } from 'src/firebase/services/firebase.service';
 
 @Injectable()
 export class ProductService {
@@ -43,9 +43,6 @@ export class ProductService {
   }
 
   create(createProductDto: CreateProductDto) {
-
-
-
     const newProduct = new this.productModel(createProductDto);
     return newProduct.save();
   }

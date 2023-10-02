@@ -1,13 +1,13 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { FirebaseModule } from '../firebase/firebase.module';
 import { Product, ProductSchema } from './entities/product.entity';
 import { Category, CategorySchema } from './entities/category.entity';
 import { ProductController } from './controllers/product.controller';
 import { CategoryController } from './controllers/categories.controller';
 import { ProductService } from './services/product.service';
 import { CategoriesService } from './services/categories.service';
+import { FirebaseModule } from 'src/firebase/firebase.module';
 
 @Module({
   imports: [

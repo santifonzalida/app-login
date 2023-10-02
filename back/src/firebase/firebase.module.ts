@@ -1,23 +1,27 @@
 import { Module } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { ConfigType } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
 import config from '../config';
 import { FirebaseService } from './services/firebase.service';
+import { FirebaseController } from './controllers/firebase.controller';
 
 @Module({
-  imports: [
-    MongooseModule.forRootAsync({
-      useFactory: (configService: ConfigType<typeof config>) => {
-        return admin.initializeApp({
+  providers: [
+    FirebaseService,
+    {
+      provide: 'FIREBASE_ADMIN',
+      useFactory: async (configService: ConfigType<typeof config>) => {
+        const { privatekey } = JSON.parse(process.env.FIREBASE_PRIVATE_KEY);
+        configService.firebase.private_key = privatekey;
+        return await admin.initializeApp({
           credential: admin.credential.cert(configService.firebase),
-          storageBucket: 'login-app-6d4d8.appspot.com',
+          storageBucket: 'showroom-bf0c9.appspot.com',
         });
       },
       inject: [config.KEY],
-    }),
+    },
   ],
-  exports: [FirebaseService],
-  providers: [FirebaseService],
+  exports: ['FIREBASE_ADMIN', FirebaseService],
+  controllers: [FirebaseController],
 })
 export class FirebaseModule {}
