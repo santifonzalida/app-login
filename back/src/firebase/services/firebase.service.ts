@@ -18,10 +18,15 @@ export class FirebaseService {
       },
     });
 
-    const fileRef = bucket.file(`${name}`);
-
-    const [descargaData] = await fileRef.download();
-
-    return descargaData;
+    const fileRef = bucket
+      .file(`${name}`)
+      .getSignedUrl({ action: 'read', expires: '01-01-2025' })
+      .then((url) => {
+        return url;
+      })
+      .catch((error) => {
+        console.log('Error al obtener URL' + error);
+      });
+    return fileRef;
   }
 }
