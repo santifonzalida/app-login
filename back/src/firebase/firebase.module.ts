@@ -11,6 +11,7 @@ import { FirebaseController } from './controllers/firebase.controller';
     {
       provide: 'FIREBASE_ADMIN',
       useFactory: async (configService: ConfigType<typeof config>) => {
+        console.log(process.env.FIREBASE_PRIVATE_KEY);
         const { privatekey } = JSON.parse(process.env.FIREBASE_PRIVATE_KEY);
         configService.firebase.private_key = privatekey;
         return await admin.initializeApp({
