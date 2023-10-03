@@ -8,7 +8,11 @@ import {
   ValidateIf,
   Min,
   IsMongoId,
+  IsArray,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateImageDto } from '../dtos/image.dto';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -28,13 +32,11 @@ export class CreateProductDto {
   @ApiProperty()
   readonly stock: number;
 
-  @IsString()
-  @ApiProperty()
-  readonly imagesUrl: string[];
-
-  @IsString()
-  @ApiProperty()
-  readonly images: string[];
+  @IsNotEmpty()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateImageDto)
+  readonly images: CreateImageDto[];
 
   @IsNotEmpty()
   @IsMongoId()

@@ -6,18 +6,22 @@ import { CreateImageDto } from '../dtos/image.dto';
 export class FirebaseService {
   constructor(@Inject('FIREBASE_ADMIN') private firebaseAdmin: admin.app.App) {}
 
-  async subirImagen(payload: CreateImageDto): Promise<string> {
-    const { data, name } = payload;
+  async subirImagen(payload: CreateImageDto): Promise<any> {
+    const { data, name, extention } = payload;
     const bucket = this.firebaseAdmin.storage().bucket();
     const file = bucket.file(name);
     const buffer = Buffer.from(data, 'base64');
 
     await file.save(buffer, {
       metadata: {
-        contentType: 'image/jpeg',
+        contentType: `${extention}`,
       },
     });
 
-    return `https://storage.googleapis.com/${bucket.name}/${name}`;
+    const fileRef = bucket.file(`${name}`);
+
+    const [descargaData] = await fileRef.download();
+
+    return descargaData;
   }
 }
