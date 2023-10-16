@@ -4,6 +4,7 @@ import {
   IsBase64,
   IsOptional,
   IsNumber,
+  IsArray,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
@@ -26,3 +27,9 @@ export class CreateImageDto {
 }
 
 export class UpdateImageDto extends PartialType(CreateImageDto) {}
+
+export class DeleteImagesDto {
+  @IsArray()
+  @IsNotEmpty()
+  readonly images: string[];
+}

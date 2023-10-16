@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import { CreateImageDto } from '../dtos/image.dto';
+import { CreateImageDto, DeleteImagesDto } from '../dtos/image.dto';
 
 @Injectable()
 export class FirebaseService {
@@ -29,4 +29,21 @@ export class FirebaseService {
       });
     return fileRef;
   }
+
+  remove = (payload: DeleteImagesDto) => {
+    if (payload.images.length > 0) {
+      payload.images.forEach((imagenUrl) => {
+        const archivoRef = admin.storage().bucket().file(imagenUrl);
+
+        archivoRef
+          .delete()
+          .then((response) => {
+            console.log('El archivo se ha eliminado exitosamente.' + response);
+          })
+          .catch((error) => {
+            console.error('Error al eliminar el archivo:', error);
+          });
+      });
+    }
+  };
 }
