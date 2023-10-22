@@ -14,6 +14,7 @@ import {
   CreateProductDto,
   FilterProductDto,
   UpdateProductDto,
+  DeleteProductDto,
 } from '../dtos/product.dtos';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -45,8 +46,8 @@ export class ProductController {
     return this.productService.update(id, updateProductDto);
   }
 
-  @Delete(':id')
-  removeProduct(@Param('id') id: string) {
-    return this.productService.remove(id);
+  @Delete()
+  removeProduct(@Body() payload: DeleteProductDto) {
+    return this.productService.remove(payload.productId);
   }
 }

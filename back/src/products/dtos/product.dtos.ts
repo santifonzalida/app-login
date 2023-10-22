@@ -46,6 +46,13 @@ export class CreateProductDto {
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
 
+export class DeleteProductDto {
+  @IsNotEmpty()
+  @IsMongoId()
+  @ApiProperty()
+  readonly productId: string;
+}
+
 export class FilterProductDto {
   @IsOptional()
   @IsPositive()

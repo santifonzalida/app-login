@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, FilterQuery } from 'mongoose';
 import { Product } from '../entities/product.entity';
@@ -7,6 +11,7 @@ import {
   FilterProductDto,
   UpdateProductDto,
 } from '../dtos/product.dtos';
+import { DeleteImagesDto } from '../../firebase/dtos/image.dto';
 import { FirebaseService } from 'src/firebase/services/firebase.service';
 
 @Injectable()
@@ -58,7 +63,26 @@ export class ProductService {
     return product;
   }
 
-  remove(id: string) {
-    return this.productModel.findByIdAndRemove(id);
+  async remove(id: string) {
+    const product = await this.productModel.findById(id).exec();
+    if (!product) {
+      throw new NotFoundException(`Product ${id} not found.`);
+    }
+    if (product.images && product.images.length > 0) {
+      try {
+        const filenames: DeleteImagesDto = {
+          images: [],
+        };
+        product.images.forEach((img: any) => {
+          filenames.images.push(img.name);
+        });
+        this.firebaseService.remove(filenames);
+      } catch (error) {
+        throw new InternalServerErrorException(
+          'Error al eliminar imagenes. Fireabse.' + error,
+        );
+      }
+    }
+    return this.productModel.findByIdAndRemove(product._id);
   }
 }
