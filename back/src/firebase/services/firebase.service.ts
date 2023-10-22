@@ -32,13 +32,13 @@ export class FirebaseService {
 
   remove = (payload: DeleteImagesDto) => {
     if (payload.images.length > 0) {
-      payload.images.forEach((imagenUrl) => {
-        const archivoRef = admin.storage().bucket().file(imagenUrl);
+      payload.images.forEach((fileName) => {
+        const archivoRef = admin.storage().bucket().file(fileName);
 
         archivoRef
           .delete()
           .then((response) => {
-            console.log('El archivo se ha eliminado exitosamente.' + response);
+            return response;
           })
           .catch((error) => {
             console.error('Error al eliminar el archivo:', error);
