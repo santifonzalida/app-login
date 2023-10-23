@@ -41,7 +41,11 @@ export class FirebaseService {
             return response;
           })
           .catch((error) => {
-            console.error('Error al eliminar el archivo:', error);
+            console.error(
+              'Error al eliminar el archivo:',
+              error.errors[0].message,
+              error.code,
+            );
           });
       });
     }
