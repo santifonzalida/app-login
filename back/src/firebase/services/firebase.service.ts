@@ -35,6 +35,8 @@ export class FirebaseService {
       payload.images.forEach((fileName) => {
         const archivoRef = admin.storage().bucket().file(fileName);
 
+        console.log('eliminando ' + fileName + '...');
+
         archivoRef
           .delete()
           .then((response) => {
