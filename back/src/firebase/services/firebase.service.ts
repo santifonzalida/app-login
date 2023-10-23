@@ -43,8 +43,8 @@ export class FirebaseService {
           .catch((error) => {
             console.error(
               'Error al eliminar el archivo:',
-              error.errors[0].message,
-              error.code,
+              error.errors ? error.errors[0].message : '',
+              error.code ? error.code : '',
             );
           });
       });
