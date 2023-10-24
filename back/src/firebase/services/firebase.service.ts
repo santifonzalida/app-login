@@ -39,8 +39,8 @@ export class FirebaseService {
 
         archivoRef
           .delete()
-          .then((response) => {
-            console.log('Archivo eliminado' + response);
+          .then((response: any) => {
+            console.log('Archivo eliminado', response.toJSON());
           })
           .catch((error) => {
             console.error(
