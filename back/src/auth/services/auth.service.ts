@@ -38,7 +38,7 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
       username: payload.username,
       userId: payload.sub,
-      role: payload.role,
+      navigateTo: payload.role == 'godAdmin' ? '/dashboard' : '/my-account',
     };
   }
 
