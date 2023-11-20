@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { APP_GUARD } from '@nestjs/core';
 import { enviroments } from './enviroments';
+import { RolesGuard } from './auth/guards/roles.guards';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { ProductModule } from './products/products.module';
 import config from './config';
+
 
 @Module({
   imports: [
@@ -30,6 +33,12 @@ import config from './config';
     DatabaseModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}
