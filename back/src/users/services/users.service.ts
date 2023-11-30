@@ -44,6 +44,7 @@ export class UsersService {
     const newUser = new this.userModel(data);
     const hashPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashPassword;
+
     try {
       const user = await newUser.save();
       const { password, ...res } = user.toJSON();
