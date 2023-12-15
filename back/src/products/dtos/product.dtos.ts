@@ -10,6 +10,7 @@ import {
   IsMongoId,
   IsArray,
   ValidateNested,
+  IsDate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateImageDto } from '../dtos/image.dto';
@@ -42,6 +43,10 @@ export class CreateProductDto {
   @IsMongoId()
   @ApiProperty()
   readonly category: string;
+
+  @ApiProperty()
+  @IsDate()
+  readonly created: Date = new Date();
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
