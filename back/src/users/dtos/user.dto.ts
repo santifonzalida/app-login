@@ -48,6 +48,9 @@ export class CreateUserDto {
   @ValidateNested({ each: true })
   @Type(() => CreateSocialMediaDto)
   readonly socialMedia: CreateSocialMediaDto[];
+
+  @IsArray()
+  readonly productsLikes: string[];
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}

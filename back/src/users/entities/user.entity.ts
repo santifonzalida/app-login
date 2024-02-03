@@ -27,5 +27,8 @@ export class User extends Document {
 
   @Prop({ Type: [SocialMediaSchema] })
   socialMedia: Types.Array<SocialMedia>;
+
+  @Prop()
+  productsLikes: Types.Array<string>;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
