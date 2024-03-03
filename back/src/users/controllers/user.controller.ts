@@ -3,6 +3,7 @@ import {
   Post,
   Put,
   Get,
+  Delete,
   Body,
   Param,
   UseGuards,
@@ -57,5 +58,12 @@ export class UserController {
     @Body() payload: UpdatePasswordUserDto,
   ) {
     return this.usersService.updatePassword(id, payload);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  removeCategory(@Param('id') id: string) {
+    return this.usersService.remove(id);
   }
 }
