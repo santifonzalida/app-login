@@ -1,24 +1,18 @@
-import {
-    IsString,
-    IsDate,
-    IsMongoId,
-  } from 'class-validator';
-  
-  export class CreateNewDeviceConnectionDto {
-    @IsString()
-    readonly name: string;
+import { IsString, IsDate } from 'class-validator';
 
-    @IsString()
-    readonly type: string;
-  
-    @IsString()
-    readonly operativeSystem: string;
-  
-    @IsDate()
-    readonly created: Date = new Date();
+export class CreateNewDeviceConnectionDto {
+  @IsString()
+  readonly browser: string;
 
-    @IsString()
-    @IsMongoId()
-    readonly userId: string;
-  }
-  
+  @IsString()
+  readonly type: string;
+
+  @IsString()
+  readonly operativeSystem: string;
+
+  @IsDate()
+  readonly created: Date = new Date();
+
+  @IsString()
+  readonly userId: string;
+}

@@ -1,10 +1,11 @@
 import { Document, Types } from 'mongoose';
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import { User } from '../../users/entities/user.entity';
 
+@Schema()
 export class DeviceConnection extends Document {
   @Prop()
-  name: string;
+  browser: string;
 
   @Prop()
   type: string;
@@ -19,4 +20,5 @@ export class DeviceConnection extends Document {
   userId: User | Types.ObjectId;
 }
 
-export const DeviceConnectionSchema = SchemaFactory.createForClass(DeviceConnection);
+export const DeviceConnectionSchema =
+  SchemaFactory.createForClass(DeviceConnection);

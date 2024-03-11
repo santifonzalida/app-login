@@ -14,8 +14,6 @@ import { ProductModule } from './products/products.module';
 import { StadisticsModule } from './statistics/statistics.module';
 import config from './config';
 
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({
