@@ -11,7 +11,9 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { ProductModule } from './products/products.module';
+import { StadisticsModule } from './statistics/statistics.module';
 import config from './config';
+
 
 
 @Module({
@@ -31,6 +33,7 @@ import config from './config';
     UsersModule,
     ProductModule,
     DatabaseModule,
+    StadisticsModule,
   ],
   controllers: [AppController],
   providers: [

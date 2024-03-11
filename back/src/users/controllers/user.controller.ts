@@ -63,7 +63,7 @@ export class UserController {
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
-  removeCategory(@Param('id') id: string) {
+  removeUser(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 }
