@@ -1,14 +1,19 @@
 import { Controller, Get } from '@nestjs/common';
-import { StatisticsService } from '../services/statistics.service';
 import { ApiTags } from '@nestjs/swagger';
+import { StatisticsService } from '../services/statistics.service';
+import { UsersService } from 'src/users/services/users.service';
 
 @ApiTags('Statistics')
 @Controller('Statistics')
 export class StatisticsController {
-  constructor(private statisticService: StatisticsService) {}
+  constructor(
+    private statisticService: StatisticsService,
+    private userService: UsersService,
+  ) {}
 
   @Get()
   getStatistics() {
-    return 'Work in progress';
+    const usuarios = this.userService.getUsers();
+    return usuarios;
   }
 }

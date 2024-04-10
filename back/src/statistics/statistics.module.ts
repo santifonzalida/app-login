@@ -1,25 +1,13 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 
 import { StatisticsController } from './controllers/statistics.controller';
 import { StatisticsService } from './services/statistics.service';
-import {
-  DeviceConnection,
-  DeviceConnectionSchema,
-} from './entities/device.entity';
-import { DeviceService } from './services/device.service';
-import { DeviceConnectionController } from './controllers/devices.controller';
+import { UsersService } from 'src/users/services/users.service';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      {
-        name: DeviceConnection.name,
-        schema: DeviceConnectionSchema,
-      },
-    ]),
-  ],
-  controllers: [StatisticsController, DeviceConnectionController],
-  providers: [StatisticsService, DeviceService],
+  imports: [UsersModule],
+  controllers: [StatisticsController],
+  providers: [StatisticsService],
 })
 export class StadisticsModule {}
