@@ -13,7 +13,7 @@ export class StatisticsController {
 
   @Get()
   getStatistics() {
-    const usuarios = this.userService.getUsers();
+    const usuarios = this.userService.getUsersByFilter(2024);
     return usuarios;
   }
 }
