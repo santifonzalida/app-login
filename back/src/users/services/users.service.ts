@@ -24,38 +24,38 @@ export class UsersService {
   }
 
   getUsersByFilter(year: number) {
-      this.userModel.aggregate([
+    return this.userModel.aggregate(
+      [
         {
           $match: {
             created: {
               $gte: new Date(year, 0, 1),
-              $lt: new Date(year + 1, 0, 1)
-            }
-          }
+              $lt: new Date(year + 1, 0, 1),
+            },
+          },
         },
         {
           $group: {
-            _id: { 
-              $month: "$created" 
-            },
-            total: { $sum: 1 } 
-          }
+            _id: { $month: '$created' },
+            total: { $sum: 1 },
+          },
         },
-        {
-          $sort: {
-            '_id': 1
-          }
-        }
-      ], (error, results) => {
+        { $sort: { _id: 1 } },
+      ],
+      (error) => {
         if (error) {
           console.error('Error al obtener usuario', error.message);
-        } else {
-          console.log('Usuarios creados por mes en el año ', year);
-          results.forEach(result => {
-            console.log(`Mes ${result._id}: ${result.total} usuarios.`)
-          })
         }
-      })
+      },
+    );
+  }
+
+  getLikedProducts() {
+    return this.userModel.aggregate([
+      { $unwind: '$productsLikes' },
+      { $group: { _id: '$productsLikes', total: { $sum: 1 } } },
+      { $sort: { total: -1 } },
+    ]);
   }
 
   async getUserById(id: string) {
