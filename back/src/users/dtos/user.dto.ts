@@ -33,7 +33,7 @@ export class CreateUserDto {
   readonly fullName: string;
 
   @ApiProperty()
-  @IsString()
+  @IsDate()
   readonly created: Date;
 
   @ApiProperty()
