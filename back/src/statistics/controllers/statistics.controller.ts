@@ -17,10 +17,10 @@ export class StatisticsController {
     return this.userService.getUsersByFilter(year);
   }
 
-  @Get('getProductosLikeados')
+  @Get('getProductosLikeados/:limit')
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
-  getProductosLikeados() {
-    return this.userService.getLikedProducts();
+  getProductosLikeados(@Param('limit') limit: number) {
+    return this.userService.getLikedProducts(limit);
   }
 }

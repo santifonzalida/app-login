@@ -50,12 +50,12 @@ export class UsersService {
     );
   }
 
-  getLikedProducts() {
+  getLikedProducts(limit: number) {
     return this.userModel.aggregate([
       { $unwind: '$productsLikes' },
       { $group: { _id: '$productsLikes', total: { $sum: 1 } } },
       { $sort: { total: -1 } },
-      { $limit: 5 }
+      { $limit: limit }
     ]);
   }
 
