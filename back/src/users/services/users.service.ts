@@ -55,7 +55,7 @@ export class UsersService {
       { $unwind: '$productsLikes' },
       { $group: { _id: '$productsLikes', total: { $sum: 1 } } },
       { $sort: { total: -1 } },
-      { $limit: limit }
+      { $limit: +limit }
     ]);
   }
 
